@@ -1,0 +1,524 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ext="http://standards.ieee.org/downloads/11073/11073-10207-2017/extension" xmlns:apkp="urn:oid:1.3.111.2.11073.10702.3.1.1" xmlns:pm="http://standards.ieee.org/downloads/11073/11073-10207-2017/participant" targetNamespace="urn:oid:1.3.111.2.11073.10702.3.1.1" elementFormDefault="qualified" attributeFormDefault="unqualified" xml:lang="en">
+    <xsd:import namespace="http://standards.ieee.org/downloads/11073/11073-10207-2017/extension" schemaLocation="ExtensionPoint.xsd"/>
+    <xsd:import namespace="http://standards.ieee.org/downloads/11073/11073-10207-2017/participant" schemaLocation="BICEPS_ParticipantModel.xsd"/>
+    <!-- AlertOccurrenceIdentifier Extension -->
+	<xsd:element name="AlertOccurrenceIdentifier" type="apkp:AlertOccurrenceIdentifierType">
+		<xsd:annotation>
+			<xsd:documentation>
+            The apkp:AlertOccurrenceIdentifier is used to uniquely identify the ALERT CONDITION and its state within the SDC network.
+            An SDC ALERT PROVIDER SHALL set @ext:MustUnderstand = "false" for each AlertOccurenceIdentifier element.
+            </xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="AlertOccurrenceIdentifierType">
+		<xsd:annotation>
+			<xsd:documentation>A UUID identifying the alert occurrence uniquely.</xsd:documentation>
+		</xsd:annotation>
+        <xsd:simpleContent>
+			<xsd:extension base="xsd:anyURI">
+				<xsd:attribute ref="ext:MustUnderstand" use="optional"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+    <!-- MaxTechnicalConfirmationDelay Extension -->
+	<xsd:element name="MaxTechnicalConfirmationDelay" type="apkp:MaxTechnicalConfirmationDelayType">
+		<xsd:annotation>
+			<xsd:documentation>
+            pm:AlertConditionDescriptor/ext:Extension/apkp:MaxTechnicalConfirmationDelay is used to define the maximum timespan that an SDC ALERT CONSUMER has in order to send a technical confirmation to the SDC ALERT PROVIDER.
+            An SDC ALERT PROVIDER SHALL set @ext:MustUnderstand = "true" for each MaxTechnicalConfirmationDelay element.
+            </xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="MaxTechnicalConfirmationDelayType">
+		<xsd:annotation>
+			<xsd:documentation>Type definition for MaxTechnicalConfirmationDelay elements.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+			<xsd:extension base="xsd:duration">
+				<xsd:attribute ref="ext:MustUnderstand" use="optional"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<!-- DistributedSystemType Extension -->
+	<xsd:element name="DistributedSystemType" type="apkp:DistributedSystemExtensionType">
+		<xsd:annotation>
+			<xsd:documentation>
+                The EXTENSION apkp:DistributedSystemType is used to express if the ALERT SYSTEM of the MDS is intended to be used in a DAS or DIS only.
+                An SDC ALERT PROVIDER SHALL set @ext:MustUnderstand = "true" for each DistributedSystemType element.
+            </xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="DistributedSystemExtensionType">
+		<xsd:annotation>
+			<xsd:documentation>Type definition for DistributedSystemType EXTENSION. An SDC ALERT PROVIDER SHALL set it to the type of distributed system it supports.</xsd:documentation>
+		</xsd:annotation>
+        <xsd:simpleContent>
+			<xsd:extension base="apkp:DistributedSystemTypeType">
+				<xsd:attribute ref="ext:MustUnderstand" use="optional"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+    <xsd:simpleType name="DistributedSystemTypeType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="DIS">
+                <xsd:annotation>
+                    <xsd:documentation>Value for distributed information system (DIS).</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="DAS">
+                <xsd:annotation>
+                    <xsd:documentation>Value for distributed alarm system (DAS).</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <!-- CountdownEndTime Extension -->
+	<xsd:element name="CountdownDuration" type="apkp:CountdownEndTimeType">
+		<xsd:annotation>
+			<xsd:documentation>
+                The CountdownDuration extension is used for providing the duration after which the ALARM SIGNAL INACTIVATION STATE will end automatically
+                An SDC ALERT PROVIDER SHALL set @ext:MustUnderstand = "false" for each CountdownDuration element.
+            </xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="CountdownEndTimeType">
+		<xsd:annotation>
+			<xsd:documentation>Type definition for CountdownEndTime elements. An SDC ALERT PROVIDER SHALL set it to the latest time that an alert signal inactivation state will end automatically.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:extension base="pm:Timestamp">
+				<xsd:attribute ref="ext:MustUnderstand" use="optional"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+    <!-- AlertSystemFailure Extension -->
+    <xsd:element name="AlertSystemFailure" type="apkp:AlertSystemFailureType">
+        <xsd:annotation>
+            <xsd:documentation>
+            The apkp:AlertSystemFailure is used to indicate the functional condition of an ALERT SYSTEM.
+            An SDC ALERT PROVIDER SHALL set @ext:MustUnderstand = "false" for each AlertSystemFailure element.
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:complexType name="AlertSystemFailureType">
+        <xsd:annotation>
+            <xsd:documentation>
+			Element that is set to false, if an SDC ALERT PROVIDER ensures that the ALERT SYSTEM is in a functional condition and is specifying an pm:AlertSystemDescriptor/@SelfCheckPeriod. True otherwise.
+			</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+			<xsd:extension base="xsd:boolean">
+				<xsd:attribute ref="ext:MustUnderstand" use="optional"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+    </xsd:complexType>
+    <!-- SignalLatched Extension -->
+    <xsd:element name="SignalLatched" type="apkp:LatchingAlertConditionType">
+        <xsd:annotation>
+            <xsd:documentation>
+            apkp:SignalLatched is used to indicate if at least one ALERT SIGNAL associated to an SDC ALERT CONDITION is latched.
+            An SDC ALERT PROVIDER SHALL set @ext:MustUnderstand = "false" for each SignalLatched element.
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:complexType name="LatchingAlertConditionType">
+        <xsd:annotation>
+            <xsd:documentation>Element that is set to true, if at least one ALERT SIGNAL associated to an ALERT CONDITION is latched.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+			<xsd:extension base="xsd:boolean">
+				<xsd:attribute ref="ext:MustUnderstand" use="optional"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+    </xsd:complexType>
+	<!-- LatchedPriority Extension -->
+    <xsd:element name="LatchedPriority" type="pm:AlertConditionPriority">
+        <xsd:annotation>
+            <xsd:documentation>
+            apkp:LatchedPriority is used to provide the PRIORITY of an SDC ALERT CONDITION in case this PRIORITY changes when in latched state compared to other states. 
+			An SDC ALERT PROVIDER SHALL set @ext:MustUnderstand = "false" for each LatchedPriority element.
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <!-- Acknowledgement Extension -->
+	<xsd:element name="Acknowledgement" type="apkp:AcknowledgementType">
+		<xsd:annotation>
+			<xsd:documentation>
+            apkp:Acknowledgement is used to indicate if an SDC ALERT CONDITION is ACKNOWLEDGED.
+            An SDC ALERT PROVIDER SHALL set @ext:MustUnderstand = "false" for each Acknowledgement element.
+            </xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="AcknowledgementType">
+		<xsd:annotation>
+			<xsd:documentation>
+			Type definition for the apkp:Acknowledgement element providing information about the kind of acknowledgedment, the start timestamp of the acknowledgement and the duration of acknowledgedment in case of timed acknowledgedment
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:attribute name="State" type="apkp:AcknowledgementAcknowledgementType">
+            <xsd:annotation>
+                <xsd:documentation>
+				Attribute that set to the type of the acknowledgedment.
+				</xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="StartTime" type="pm:Timestamp" use="optional">
+            <xsd:annotation>
+                <xsd:documentation>
+				Attribute that is set to the time, the pm:AlertConditionState was acknowledged.
+				</xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="ActualDuration" type="xsd:duration" use="optional">
+            <xsd:annotation>
+                <xsd:documentation>
+				Attribute that is optionally set to the duration, that an pm:AlertConditionState is in the acknowledged state.
+				</xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute ref="ext:MustUnderstand" use="optional"/>
+	</xsd:complexType>
+    <xsd:simpleType name="AcknowledgementAcknowledgementType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="Timed">
+                <xsd:annotation>
+                    <xsd:documentation>
+					Value for timed acknowledgement.
+					</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Indefinite">
+                <xsd:annotation>
+                    <xsd:documentation>
+					Value for indefinite acknowledgement.
+					</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+			<xsd:enumeration value="Both">
+                <xsd:annotation>
+                    <xsd:documentation>
+					Value for timed and indefinite acknowledgement.
+					</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <!-- ConditionAcknowledgement Extension -->
+	<xsd:element name="ConditionAcknowledgement" type="apkp:ConditionAcknowledgementType">
+		<xsd:annotation>
+			<xsd:documentation>
+            apkp:ConditionAcknowledgement is used to indicate if and how an SDC ALERT CONDITION can be ACKNOWLEDGED.
+            An SDC ALERT PROVIDER SHALL set @ext:MustUnderstand = "false" for each ConditionAcknowledgement element.
+            </xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ConditionAcknowledgementType">
+		<xsd:annotation>
+			<xsd:documentation>
+			Type definition for the apkp:ConditionAcknowledgement element providing information about the kind of acknowledgedment and the duration of acknowledgedment in case of timed acknowledgedment.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:attribute name="Supported" type="apkp:AcknowledgementAcknowledgementType">
+            <xsd:annotation>
+                <xsd:documentation>
+				Attribute that set to the type of the acknowledgedment.
+				</xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="Duration" type="xsd:duration" use="optional">
+            <xsd:annotation>
+                <xsd:documentation>
+				Attribute that is optionally set to the duration, that an pm:AlertConditionState would be set in the acknowledged state.
+				</xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute ref="ext:MustUnderstand" use="optional"/>
+	</xsd:complexType>
+    <!-- PriorityChange Extension -->
+    <xsd:element name="PriorityChange" type="apkp:PriorityChangeType">
+        <xsd:annotation>
+            <xsd:documentation>The PriorityChange extension is used to provide timestamps for changes of pm:AlertConditionState/@ActualPriority as this information might be required by SDC ALERT CONSUMERs to determine the point in time the priority change happened in comparison to the pm:AlertConditionState/@DeterminationTime used to determine the point in time the pm:AlertConditionState/@Presence changed. An SDC ALERT PROVIDER SHALL only use apkp:PriorityChange when pm:AlertConditionState/@Presence = True.
+            An SDC ALERT PROVIDER SHALL set @ext:MustUnderstand = "false" for each PriorityChange element.
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:complexType name="PriorityChangeType">
+        <xsd:annotation>
+            <xsd:documentation>Type definition for PriorityChange elements.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:attribute name="DeterminationTime" type="pm:Timestamp" use="required">
+            <xsd:annotation>
+                <xsd:documentation>Attribute that is set to the time of priority change whenever the SDC ALERT PROVIDER uses pm:AlertConditionState/@ActualPriority while pm:AlertConditionState/@Presence = True.</xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+    </xsd:complexType>
+    <!-- MarkedEvent Extension -->
+    <xsd:element name="MarkedEvent" type="apkp:MarkedEventType">
+        <xsd:annotation>
+            <xsd:documentation>			
+			The MarkedEvent extension is used to communicate an event that has been flagged by a USER or a MEDICAL DEVICE as of particular interest in order to indicate to an SDC ALERT CONSUMER to additionally store parameter and waveform data for a specific amount of time before and after the event.
+            An SDC ALERT PROVIDER SHALL set @ext:MustUnderstand = "false" for each MarkedEvent element.
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:complexType name="MarkedEventType">
+        <xsd:sequence>
+            <xsd:element name="EventType" type="pm:CodedValue" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+					The unit (dimension) of pm:Measurement.
+					</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+        <xsd:attribute name="DeterminationTime" type="pm:Timestamp" use="required">
+            <xsd:annotation>
+                <xsd:documentation>
+				Attribute that optionally contains the pm:HandleRef of the MDIB element that triggered the marked event.
+				</xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="EventMdibVersion" type="pm:VersionCounter" use="required">
+            <xsd:annotation>
+                <xsd:documentation>
+				Attribute that is set to the pm:MdibVersionGroup/@MdibVersion at the point in time that the event was marked.
+				</xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="EventSource" type="pm:HandleRef" use="optional">
+            <xsd:annotation>
+                <xsd:documentation>
+				Attribute that optionally is set to the pm:HandleRef of the MDIB element that triggered the marked event.
+				</xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="SnapshotStartTime" type="pm:Timestamp" use="optional">
+            <xsd:annotation>
+                <xsd:documentation>
+				Attribute that optionally is set to the time the time, the snapshot starts.
+				</xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="SnapshotEndTime" type="pm:Timestamp" use="optional">
+            <xsd:annotation>
+                <xsd:documentation>
+				Attribute that optionally is set to the time the time, the snapshot ends.
+				</xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="SnapshotEntries" type="pm:EntryRef" use="optional">
+            <xsd:annotation>
+                <xsd:documentation>
+				Attribute that optionally is set to the list of pm:HandleRef of the MDIB data belonging to the snapshot.
+				</xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="SnapshotStartVersion" type="pm:VersionCounter" use="optional">
+            <xsd:annotation>
+                <xsd:documentation>
+				Attribute that optionally is set to the pm:MdibVersionGroup/@MdibVersion, the snapshot starts.
+				</xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="SnapshotEndVersion" type="pm:VersionCounter" use="optional">
+            <xsd:annotation>
+                <xsd:documentation>
+				Attribute that optionally is set to the pm:MdibVersionGroup/@MdibVersion, the snapshot ends
+				</xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+    </xsd:complexType>
+   <!-- MaxDistributedAlarmDelay Extension -->
+    <xsd:element name="MaxDistributedAlarmDelay" type="apkp:DistributedAlarmDelayType">
+        <xsd:annotation>
+            <xsd:documentation>
+			The MaxDistributedAlarmDelay extension is used to communicate that an SDC ALERT PROVIDER participating in a DIS or DAS has determined that RISK MANAGEMENT or an applied standard requires the fulfillment of certain boundaries regarding the duration of the sum of ALARM CONDITION DELAY and ALARM SIGNAL GENERATION DELAY.
+            An SDC ALERT PROVIDER SHALL set @ext:MustUnderstand = "false" for each DistributedAlarmDelay element.
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+	<xsd:complexType name="DistributedAlarmDelayType">
+        <xsd:attribute name="MaxAlertSignalGenerationDelay " type="xsd:duration">
+            <xsd:annotation>
+                <xsd:documentation>
+				Attribute that is set to the maximum delay that is allowed on the SDC ALERT CONSUMER side according to RISK MANAGEMENT or applied standard.
+				</xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+    </xsd:complexType>
+	<!-- ActualText Extension -->
+    <xsd:element name="ActualText" type="apkp:ActualTextType">
+        <xsd:annotation>
+            <xsd:documentation>
+			The ActualText extension is used to provide updated text of an SDC ALERT CONDITION, when additional runtime information is available.
+			An SDC ALERT PROVIDER SHALL set @ext:MustUnderstand = "false" for each ActualText element.
+			</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+	<xsd:complexType name="ActualTextType">
+		<xsd:annotation>
+            <xsd:documentation>Type definition for ActualText elements.</xsd:documentation>
+        </xsd:annotation>
+		<xsd:sequence>
+			<xsd:choice minOccurs="1" maxOccurs="1">
+				<xsd:element name="DynamicDescriptionWithPlaceholders" type="pm:LocalizedText" minOccurs="1" maxOccurs="unbounded">
+					<xsd:annotation>
+						<xsd:documentation>
+							Element providing the more precise text for an SDC ALERT CONDITION. There can be multiple element within an apkp:ActualText, for instance at least one element for each supported language.
+						</xsd:documentation>
+					</xsd:annotation>           
+				</xsd:element>
+			</xsd:choice>
+		</xsd:sequence> 
+	</xsd:complexType>
+	<!-- CommunicationContributionDelay Extension -->
+    <xsd:element name="CommunicationContributionDelay" type="apkp:CommunicationContributionDelayType">
+        <xsd:annotation>
+            <xsd:documentation>
+			apkp:CommunicationContributionDelay: Timespan that a Provider takes from the point of time where the ALARM CONDITION has been determined to the point of time where the information is put on the network. This is an information that is for instance required by the clause 6.4.2 in [IEC 60601-1-8].
+			An SDC ALERT PROVIDER SHALL set @ext:MustUnderstand = "false" for each CommunicationContributionDelay element.
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+	<xsd:complexType name="CommunicationContributionDelayType">
+		<xsd:annotation>
+			<xsd:documentation>Type definition for CommunicationContributionDelay elements.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+			<xsd:extension base="xsd:duration">
+				<xsd:attribute ref="ext:MustUnderstand" use="optional"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<!-- AlarmInactivationStateBasedOnRank Extension -->
+    <xsd:element name="AlarmInactivationStateBasedOnRank" type="apkp:AISBasedOnRankType">
+        <xsd:annotation>
+            <xsd:documentation>
+            If an SDC ALERT PROVIDER sets an ALARM SIGNAL INACTIVATION STATE for SDC ALERT CONDITIONs that are above a certain pm:AlertConditionState/@Rank, this Extension can be used to inform an SDC ALERT CONSUMER about the value of that @Rank.
+            An SDC ALERT PROVIDER SHALL set @ext:MustUnderstand = "false" for each AlarmInactivationStateBasedOnRank element.
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:complexType name="AISBasedOnRankType">
+        <xsd:annotation>
+            <xsd:documentation>
+			Element that is set to the numeric value of the @Rank above which all SDC ALERT CONDITIONs have to follow the ALARM SIGNAL INACTIVATION STATE.
+			</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+			<xsd:extension base="xsd:int">
+				<xsd:attribute ref="ext:MustUnderstand" use="optional"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+    </xsd:complexType>
+	<!-- MostViolated Extension -->
+    <xsd:element name="MostViolated" type="apkp:MostViolatedType">
+        <xsd:annotation>
+            <xsd:documentation>
+			The MostViolated extension is used to provide the most extrem value of the Metric that is at the source of the associated SDC ALERT CONDITION while the  ALERT CONDITION has its presence = true.
+            An SDC ALERT PROVIDER SHALL set @ext:MustUnderstand = "false" for each MostViolated element.
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:complexType name="MostViolatedType">
+        <xsd:annotation>
+            <xsd:documentation>
+			Type definition of MostViolatedType elements.
+			</xsd:documentation>
+        </xsd:annotation>
+		<xsd:sequence>
+            <xsd:choice minOccurs="1" maxOccurs="1">
+				<xsd:element name="NumericValue" type="pm:NumericMetricValue">
+					<xsd:annotation>
+						<xsd:documentation>
+						The most extrem value that the Metric had in case it is a pm:NumericMetricValue.
+						</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>		
+				<xsd:element name="SampleArrayValue" type="pm:SampleArrayValue">
+					<xsd:annotation>
+						<xsd:documentation>
+						The most extrem value that the Metric had in case it is a pm:SampleArrayValue.
+						</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>	
+				<xsd:element name="StringValue" type="pm:StringMetricValue">
+					<xsd:annotation>
+						<xsd:documentation>
+						The most extrem value that the Metric had in case it is a pm:StringMetricValue.
+						</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>					
+			</xsd:choice>	
+			<xsd:element name="Unit" type="pm:CodedValue" minOccurs="0" maxOccurs="1">
+					<xsd:annotation>
+						<xsd:documentation>
+						The unit (dimension) of the MostViolatedValue element, in case it is not the same as the referenced source metric.
+						</xsd:documentation>
+					</xsd:annotation>
+			</xsd:element>
+        </xsd:sequence>
+		<xsd:attribute name="SourceMetricHandle" type="pm:Handle" use="required">
+            <xsd:annotation>
+                <xsd:documentation>
+				Attribute that set to the pm:HandleRef of the MDIB element that is the source of the SDC ALERT CONDITION.
+				</xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+    </xsd:complexType>
+	<!-- ListedTechnicalAlertConfirmation Extension -->
+	<xsd:element name="TechnicalAlertConfirmation" type="TechnicalAlertConfirmationType">
+		<xsd:annotation>
+			<xsd:documentation>This element provides a list of SDC ALERT CONDITIONs that an SDC ALERT CONSUMER technically confirms and the SDC ALERT CONDITIONs that it does not confirm.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="TechnicalAlertConfirmationType">
+		<xsd:annotation>
+			<xsd:documentation>List of SDC ALERT CONDITIONs that are confirmed and not confirmed.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="AlertConfirmation" type="AlertConfirmationType" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="AlertConfirmationType">
+		<xsd:annotation>
+			<xsd:documentation>Each one of this element provides the ALERT OCCURRENCE ID TUPLE of the SDC ALERT CONDITION and the reason as an attribute.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:extension base="anyURI">
+				<xsd:annotation>
+					<xsd:documentation>This elements is used to provide the ALERT OCCURRENCE ID TUPLE of the SDC ALERT CONDITION that is confirmed</xsd:documentation>
+				</xsd:annotation>
+				<xsd:attribute name="reason" type="AlertConfirmationReasonType" use="required"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:simpleType name="AlertConfirmationReasonType">
+		<xsd:restriction base="xsd:string">
+			<xsd:annotation>
+				<xsd:documentation>The AlertConfirmationReasonType provides the type of confirmation for an SDC ALERT CONDITION</xsd:documentation>
+			</xsd:annotation>
+			<xsd:enumeration value="ConfirmedAlert">
+				<xsd:annotation>
+					<xsd:documentation>Value informing that an SDC ALERT CONSUMER technically confirms this SDC ALERT CONDITION.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="TooManyAlerts">
+				<xsd:annotation>
+					<xsd:documentation>Value informing that an SDC ALERT CONSUMER cannot process this SDC ALERT CONDITION due to too many present alerts received from the SDC ALERT PROVIDER.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Error">
+				<xsd:annotation>
+					<xsd:documentation>Value informing that an SDC ALERT CONSUMER cannot process this SDC ALERT CONDITION due to an overload from the DAS.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Unknown">
+				<xsd:annotation>
+					<xsd:documentation>Value informing that an SDC ALERT CONSUMER cannot process this SDC ALERT CONDITION due to unknown reasons.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>
