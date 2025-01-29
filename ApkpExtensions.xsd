@@ -361,8 +361,15 @@
             <xsd:documentation>Type definition for ActualText elements.</xsd:documentation>
         </xsd:annotation>
 		<xsd:sequence>
-			<xsd:choice minOccurs="1" maxOccurs="1">
-				<xsd:element name="DynamicDescriptionWithPlaceholders" type="pm:LocalizedText" minOccurs="1" maxOccurs="unbounded">
+			<xsd:choice minOccurs="1" maxOccurs="1">	<!-- ToDo: is maxOccurs="1" correct? -->
+				<xsd:element name="DynamicDescription" type="pm:LocalizedText" minOccurs="1" maxOccurs="unbounded">
+					<xsd:annotation>
+						<xsd:documentation>
+							Element providing the more precise text for an SDC ALERT CONDITION. There can be multiple element within an apkp:ActualText, for instance at least one element for each supported language.
+						</xsd:documentation>
+					</xsd:annotation>           
+				</xsd:element>
+				<xsd:element name="Placeholder" type="PlaceholderType" minOccurs="1" maxOccurs="unbounded">
 					<xsd:annotation>
 						<xsd:documentation>
 							Element providing the more precise text for an SDC ALERT CONDITION. There can be multiple element within an apkp:ActualText, for instance at least one element for each supported language.
@@ -371,7 +378,39 @@
 				</xsd:element>
 			</xsd:choice>
 		</xsd:sequence> 
+	</xsd:complexType>	
+	<xsd:complexType name="PlaceholderType">
+		<xsd:annotation>
+			<xsd:documentation>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:attribute name="Token" type="xsd:string">
+            <xsd:annotation>
+                <xsd:documentation>
+				</xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="Ref" type="pm:LocalizedTextRef" use="optional">
+            <xsd:annotation>
+                <xsd:documentation>				
+				</xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="Num" type="xsd:decimal" use="optional">
+            <xsd:annotation>
+                <xsd:documentation>
+				</xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+		<xsd:attribute name="Precision" type="xsd:int" use="optional">
+            <xsd:annotation>
+                <xsd:documentation>
+				</xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute ref="ext:MustUnderstand" use="optional"/>
 	</xsd:complexType>
+	
 	<!-- CommunicationContributionDelay Extension -->
     <xsd:element name="CommunicationContributionDelay" type="apkp:CommunicationContributionDelayType">
         <xsd:annotation>
